@@ -41,6 +41,11 @@ describe('tld.js', function () {
       expect(tld.isValid('localhost')).to.be.false;
       expect(tld.isValid('google')).to.be.false;
     });
+
+    it('should be falsy on IP addresses', function () {
+      expect(tld.isValid('127.0.0.1')).to.be.false;
+      expect(tld.isValid('0.0.0.0')).to.be.false;
+    });
   });
 
   describe('getDomain method', function () {

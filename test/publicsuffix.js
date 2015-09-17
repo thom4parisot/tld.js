@@ -113,15 +113,15 @@ describe('PublicSuffix tests', function(){
   });
 
   it('IDN labels.', function(){
-    // checkPublicSuffix('食狮.com.cn', '食狮.com.cn');
-    // checkPublicSuffix('食狮.公司.cn', '食狮.公司.cn');
-    // checkPublicSuffix('www.食狮.公司.cn', '食狮.公司.cn');
-    // checkPublicSuffix('shishi.公司.cn', 'shishi.公司.cn');
-    // checkPublicSuffix('公司.cn', null);
-    // checkPublicSuffix('食狮.中国', '食狮.中国');
-    // checkPublicSuffix('www.食狮.中国', '食狮.中国');
-    // checkPublicSuffix('shishi.中国', 'shishi.中国');
-    // checkPublicSuffix('中国', null);
+    checkPublicSuffix('食狮.com.cn', '食狮.com.cn');
+    checkPublicSuffix('食狮.公司.cn', '食狮.公司.cn');
+    checkPublicSuffix('www.食狮.公司.cn', '食狮.公司.cn');
+    checkPublicSuffix('shishi.公司.cn', 'shishi.公司.cn');
+    checkPublicSuffix('公司.cn', null);
+    checkPublicSuffix('食狮.中国', '食狮.中国');
+    checkPublicSuffix('www.食狮.中国', '食狮.中国');
+    checkPublicSuffix('shishi.中国', 'shishi.中国');
+    checkPublicSuffix('中国', null);
   });
 
   it('Same as above, but punycoded.', function(){

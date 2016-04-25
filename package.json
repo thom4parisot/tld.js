@@ -20,6 +20,7 @@
   "scripts": {
     "lint": "jshint --config .jshintrc lib/**/*.js",
     "pretest": "npm run build",
+    "install": "npm run build",
     "test": "mocha -R dot -r env-test",
     "posttest": "npm run lint && npm run test-browser",
     "test-coverage": "mocha -R travis-cov -r blanket -r env-test",

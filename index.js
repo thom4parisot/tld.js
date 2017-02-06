@@ -12,7 +12,7 @@ var getPublicSuffix = require('./lib/public-suffix.js');
 var tldExists = require('./lib/tld-exists.js');
 
 function factory(validHosts, rules) {
-  const _rules = rules || allRules;
+  var _rules = rules || allRules;
 
   return {
     cleanHostValue: cleanHostValue,

@@ -149,10 +149,10 @@ var tld = require('tldjs');
 tld.getDomain('localhost');           // returns null
 tld.getSubdomain('vhost.localhost');  // returns null
 
-tld.validHosts = ['localhost'];
+var customTld = tld.init(['localhost']);
 
-tld.getDomain('localhost');           // returns 'localhost'
-tld.getSubdomain('vhost.localhost');  // returns 'vhost'
+customTld.getDomain('localhost');           // returns 'localhost'
+customTld.getSubdomain('vhost.localhost');  // returns 'vhost'
 ```
 
 ## Updating the TLDs List

@@ -1,6 +1,6 @@
 "use strict";
 
-var rules = require('./rules.json');
+var allRules = require('./rules.json');
 
 var cleanHostValue = require('./lib/clean-host.js');
 var escapeRegExp = require('./lib/escape-regexp.js');
@@ -11,19 +11,20 @@ var isValid = require('./lib/is-valid.js');
 var getPublicSuffix = require('./lib/public-suffix.js');
 var tldExists = require('./lib/tld-exists.js');
 
-function factory(rules, validHosts) {
+function factory(validHosts, rules) {
+  const _rules = rules || allRules;
+
   return {
     cleanHostValue: cleanHostValue,
     escapeRegExp: escapeRegExp,
     getRulesForTld: getRulesForTld,
-    getDomain: getDomain.bind(null, rules, validHosts),
-    getSubdomain: getSubdomain.bind(null, rules, validHosts),
+    getDomain: getDomain.bind(null, _rules, validHosts),
+    getSubdomain: getSubdomain.bind(null, _rules, validHosts),
     isValid: isValid.bind(null, validHosts),
-    getPublicSuffix: getPublicSuffix.bind(null, rules),
-    tldExists: tldExists.bind(null, rules),
-    init: factory.bind(null),
-    rules: rules,
+    getPublicSuffix: getPublicSuffix.bind(null, _rules),
+    tldExists: tldExists.bind(null, _rules),
+    init: factory.bind(null)
   };
 }
 
-module.exports = factory(rules, []);
+module.exports = factory([], allRules);

@@ -12,7 +12,7 @@ describe('tld.js', function () {
     });
 
     it('should have .rules map', function () {
-      expect(tld.rules).to.be.an('object').and.to.have.property('yokohama');
+      expect(tld.rules).to.be(undefined);
     });
 
     it('should not have any .validHosts property', function () {
@@ -288,7 +288,7 @@ describe('tld.js', function () {
     var customTld;
 
     before(function(){
-      customTld = tld.init(tld.rules, ['localhost']);
+      customTld = tld.init(['localhost']);
     });
 
     it('should now be a valid host', function(){

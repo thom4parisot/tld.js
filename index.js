@@ -18,12 +18,22 @@ function factory(validHosts, rules) {
     cleanHostValue: cleanHostValue,
     escapeRegExp: escapeRegExp,
     getRulesForTld: getRulesForTld,
-    getDomain: getDomain.bind(null, _rules, validHosts),
-    getSubdomain: getSubdomain.bind(null, _rules, validHosts),
-    isValid: isValid.bind(null, validHosts),
-    getPublicSuffix: getPublicSuffix.bind(null, _rules),
-    tldExists: tldExists.bind(null, _rules),
-    init: factory.bind(null)
+    getDomain: function (host) {
+      return getDomain(_rules, validHosts, host);
+    },
+    getSubdomain: function (host) {
+      return getSubdomain(_rules, validHosts, host);
+    },
+    isValid: function (host) {
+      return isValid(validHosts, host);
+    },
+    getPublicSuffix: function (host) {
+      return getPublicSuffix(_rules, host);
+    },
+    tldExists: function (tld) {
+      return tldExists(_rules, tld);
+    },
+    init: factory
   };
 }
 

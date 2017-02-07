@@ -60,9 +60,9 @@
     "expect.js": "^0.3.1",
     "github-changes": "^1.0.0",
     "jshint": "^2.5.1",
-    "mocha": "^2.3.3",
+    "mocha": "^3.2.0",
     "nyc": "^10.1.2",
-    "phantomjs": "^1.9.18",
+    "phantomjs-prebuilt": "^2.1.7",
     "testling": "^1.7.0"
   },
   "keywords": [

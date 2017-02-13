@@ -152,7 +152,6 @@ describe('tld.js', function () {
     });
 
     it('should return the suffix if a rule exists that has no exceptions', function(){
-      expect(tld.rules.eu).to.not.contain('!');
       expect(tld.getPublicSuffix('microsoft.eu')).to.be('eu');
     });
 
@@ -288,7 +287,9 @@ describe('tld.js', function () {
     var customTld;
 
     before(function(){
-      customTld = tld.init(['localhost']);
+      customTld = tld.fromUserSettings({
+        validHosts: ['localhost']
+      });
     });
 
     it('should now be a valid host', function(){

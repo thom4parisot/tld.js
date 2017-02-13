@@ -11,30 +11,37 @@ var isValid = require('./lib/is-valid.js');
 var getPublicSuffix = require('./lib/public-suffix.js');
 var tldExists = require('./lib/tld-exists.js');
 
-function factory(validHosts, rules) {
-  var _rules = rules || allRules;
+/**
+ * Creates a new instance of tldjs
+ * 
+ * @param  {Object.<rules,validHosts>} options [description]
+ * @return {tldjs|Object}                      [description]
+ */
+function factory(options) {
+  var rules = options.rules || allRules || {};
+  var validHosts = options.validHosts || [];
 
   return {
     cleanHostValue: cleanHostValue,
     escapeRegExp: escapeRegExp,
     getRulesForTld: getRulesForTld,
     getDomain: function (host) {
-      return getDomain(_rules, validHosts, host);
+      return getDomain(rules, validHosts, host);
     },
     getSubdomain: function (host) {
-      return getSubdomain(_rules, validHosts, host);
+      return getSubdomain(rules, validHosts, host);
     },
     isValid: function (host) {
       return isValid(validHosts, host);
     },
     getPublicSuffix: function (host) {
-      return getPublicSuffix(_rules, host);
+      return getPublicSuffix(rules, host);
     },
     tldExists: function (tld) {
-      return tldExists(_rules, tld);
+      return tldExists(rules, tld);
     },
-    init: factory
+    fromUserSettings: factory
   };
 }
 
-module.exports = factory([], allRules);
+module.exports = factory({ validHosts: [], rules: allRules });

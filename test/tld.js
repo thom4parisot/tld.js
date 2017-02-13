@@ -18,6 +18,13 @@ describe('tld.js', function () {
     it('should not have any .validHosts property', function () {
       expect(tld.validHosts).to.be(undefined);
     });
+
+    it('should export bound methods', function () {
+      var getDomain = tld.getDomain;
+      var domain = 'fr.google.com';
+
+      expect(tld.getDomain(domain)).to.equal(getDomain(domain));
+    });
   });
 
   describe('isValid method', function () {

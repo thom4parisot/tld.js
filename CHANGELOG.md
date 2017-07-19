@@ -1,6 +1,6 @@
 ## Change Log
 
-### 1.7.1 (2017/07/18 20:09 +00:00)
+### v1.7.1 (2017/07/18 20:09 +00:00)
 - [#96](https://github.com/oncletom/tld.js/pull/96) Add support for fully qualified domains (trailing dot in domain name) (#96) (@remusao)
 - [#91](https://github.com/oncletom/tld.js/pull/91) Bundle rules.json on prepublish (#91) (@oncletom)
 - [#90](https://github.com/oncletom/tld.js/pull/90) Remove bower and component support (#90) (@oncletom)

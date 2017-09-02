@@ -35,6 +35,17 @@ function factory(options) {
   var validHosts = options.validHosts || [];
   var _extractHostname = options.extractHostname || extractHostname;
 
+  // Customize ICANN/Private domain
+  var allowIcann = true;
+  if (options.allowIcann !== undefined) {
+    allowIcann = options.allowIcann;
+  }
+
+  var allowPrivate = true;
+  if (options.allowPrivate !== undefined) {
+    allowPrivate = options.allowPrivate;
+  }
+
   /**
    * Process a given url and extract all information. This is a higher level API
    * around private functions of `tld.js`. It allows to remove duplication (only
@@ -54,6 +65,8 @@ function factory(options) {
       isIp: null,
       tldExists: false,
       publicSuffix: null,
+      // isIcann: false,
+      // isPrivate: false,
       domain: null,
       subdomain: null,
     };
@@ -82,7 +95,11 @@ function factory(options) {
     if (step === TLD_EXISTS) { return result; }
 
     // Extract public suffix
-    result.publicSuffix = getPublicSuffix(rules, result.hostname);
+    result.publicSuffix = getPublicSuffix(
+      rules,
+      result.hostname,
+      allowIcann,
+      allowPrivate).publicSuffix;
     if (step === PUBLIC_SUFFIX) { return result; }
 
     // Extract domain
@@ -109,7 +126,7 @@ function factory(options) {
       return parse(url, TLD_EXISTS).tldExists;
     },
     getPublicSuffix: function (url) {
-      return parse(url, PUBLIC_SUFFIX).publicSuffix;
+      return parse(url, PUBLIC_SUFFIX, allowIcann, allowPrivate).publicSuffix;
     },
     getDomain: function (url) {
       return parse(url, DOMAIN).domain;

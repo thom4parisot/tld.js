@@ -39,12 +39,17 @@ describe('tld.js', function () {
       expect(tld.isValid('')).to.be(false);
       expect(tld.isValid('localhost')).to.be(false);
       expect(tld.isValid('-google.com')).to.be(false);
+      expect(tld.isValid('google-.com')).to.be(false);
+      expect(tld.isValid('google.com-')).to.be(false);
       expect(tld.isValid('.google.com')).to.be(false);
       expect(tld.isValid('google..com')).to.be(false);
       expect(tld.isValid('google.com..')).to.be(false);
       expect(tld.isValid('example.' + 'a'.repeat(64) + '.')).to.be(false);
       expect(tld.isValid('example.' + 'a'.repeat(64))).to.be(false);
       expect(tld.isValid('googl@.com..')).to.be(false);
+
+      // Length of 256 (too long)
+      expect(tld.isValid(maxSizeHostname + 'a')).to.be(false);
 
       expect(tld.isValid('google.com')).to.be(true);
       expect(tld.isValid('miam.google.com')).to.be(true);
@@ -57,9 +62,6 @@ describe('tld.js', function () {
 
       // Length of 255 (maximum allowed)
       expect(tld.isValid(maxSizeHostname)).to.be(true);
-
-      // Length of 256 (too long)
-      expect(tld.isValid(maxSizeHostname + 'a')).to.be(false);
     });
 
     it('should detect invalid hostname', function () {

@@ -8,6 +8,9 @@
     "type": "git",
     "url": "git://github.com/oncletom/tld.js.git"
   },
+  "bin": {
+    "tldjs": "bin/tld.js"
+  },
   "bugs": {
     "url": "https://github.com/oncletom/tld.js/issues"
   },

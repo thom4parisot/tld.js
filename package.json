@@ -12,7 +12,7 @@
     "url": "https://github.com/oncletom/tld.js/issues"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">= 6"
   },
   "main": "index.js",
   "license": "MIT",
@@ -60,7 +60,7 @@
     ]
   },
   "dependencies": {
-    "punycode": "~1.4.1"
+    "punycode": "^2.1.0"
   },
   "devDependencies": {
     "benchmark": "^2.1.4",

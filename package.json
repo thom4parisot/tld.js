@@ -60,9 +60,7 @@
     ]
   },
   "dependencies": {
-    "punycode": "~1.4.1"
-  },
-  "devDependencies": {
+    "punycode": "~1.4.1",
     "benchmark": "^2.1.4",
     "browserify": "^15.2.0",
     "env-test": "^1.0.0",

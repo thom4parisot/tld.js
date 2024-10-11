@@ -1,0 +1,35 @@
+name: Node applications
+
+on:
+  push:
+    branches:
+    - master
+    tags:
+    - 'v*'
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+        cache: npm
+
+    - name: Install and test
+      run: npm clean-install-test -- --tldjs-update-rules
+
+    - name: Code coverage
+      uses: coverallsapp/github-action@v2
+
+    - name: Publish on npm
+      if: github.ref_type == 'tag'
+      run: |
+        npm run build
+        npm publish --access public
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.npm_token}}

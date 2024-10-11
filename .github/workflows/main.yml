@@ -3,7 +3,7 @@ name: Node applications
 on:
   push:
     branches:
-    - $default-branch
+    - master
     tags:
     - 'v*'
   pull_request:

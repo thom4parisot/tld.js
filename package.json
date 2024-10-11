@@ -41,8 +41,9 @@
   "nyc": {
     "check-coverage": true,
     "reporter": [
-      "text",
-      "html"
+      "html",
+      "lcov",
+      "text"
     ]
   },
   "dependencies": {

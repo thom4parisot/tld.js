@@ -19,5 +19,3 @@ coverage*
 rules.json
 tld.js
 tld.min.js
-
-package-lock.json

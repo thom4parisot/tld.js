@@ -1,31 +1,30 @@
 {
-  "author": "Thomas Parisot (https://oncletom.io)",
+  "author": "Thomas Parisot (https://thom4.net)",
   "name": "tldjs",
   "description": "JavaScript API to work against complex domain names, subdomains and URIs.",
   "version": "2.3.1",
-  "homepage": "https://github.com/oncletom/tld.js",
+  "homepage": "https://github.com/thom4parisot/tld.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/oncletom/tld.js.git"
+    "url": "git://github.com/thom4parisot/tld.js.git"
   },
   "bugs": {
-    "url": "https://github.com/oncletom/tld.js/issues"
+    "url": "https://github.com/thom4parisot/tld.js/issues"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">= 20"
   },
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "benchmark": "node ./bin/benchmark.js",
-    "generate-changelog": "github-changes -o oncletom -r 'tld.js' -n ${npm_package_version} --only-pulls --use-commit-body",
+    "generate-changelog": "github-changes -o thom4parisot -r 'tld.js' -n ${npm_package_version} --only-pulls --use-commit-body",
     "lint": "eslint ./lib",
     "postinstall": "node ./bin/postinstall.js",
-    "posttest": "npm run lint && npm run test-browser",
+    "posttest": "npm run lint",
     "prepack": "npm run build && npm run build-min",
     "prepublish": "npm run update",
     "test": "nyc mocha -R dot -r env-test",
-    "test-browser": "testling",
     "test-watch": "mocha -R dot -r env-test --watch",
     "update": "node ./bin/update.js",
     "version": "npm run generate-changelog && git add CHANGELOG.md",
@@ -42,36 +41,23 @@
   "nyc": {
     "check-coverage": true,
     "reporter": [
-      "text",
-      "html"
-    ]
-  },
-  "testling": {
-    "files": "test/*.js",
-    "harness": "mocha-bdd",
-    "browsers": [
-      "ie/7..10",
-      "ff/latest..nightly",
-      "chrome/latest..canary",
-      "opera/latest..next",
-      "safari/6.0",
-      "iphone/6.0",
-      "android/4.2"
+      "html",
+      "lcov",
+      "text"
     ]
   },
   "dependencies": {
-    "punycode": "~1.4.1"
+    "punycode": "^2.0.0"
   },
   "devDependencies": {
     "benchmark": "^2.1.4",
-    "browserify": "^15.2.0",
+    "browserify": "^17.0.1",
     "env-test": "^1.0.0",
     "eslint": "^4.18.2",
     "expect.js": "^0.3.1",
-    "github-changes": "^1.1.2",
-    "mocha": "^5.0.0",
-    "nyc": "^11.4.1",
-    "testling": "^1.7.0",
+    "github-changes": "^2.0.3",
+    "mocha": "^10.7.3",
+    "nyc": "^17.1.0",
     "uglify-js": "^3.1.9"
   },
   "keywords": [

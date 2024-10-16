@@ -291,7 +291,7 @@ describe('tld.js', function () {
     });
 
     it('should return the initial value if it is not a valid hostname', function(){
-      expect(tld.extractHostname(42)).to.equal('42');
+      expect(tld.extractHostname(42)).to.equal(42);
     });
 
     it('should return www.nytimes.com even with an URL as a parameter', function(){

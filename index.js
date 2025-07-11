@@ -26,11 +26,41 @@ var DOMAIN = 3;
 var SUB_DOMAIN = 4;
 var ALL = 5;
 
+/**
+ * @typedef {object} FactoryOptions
+ * @property {import('./lib/suffix-trie.js')} [rules]
+ * @property {string[]} [validHosts]
+ * @property {(string) => string|null} [extractHostname]
+ */
+
+/**
+ * @typedef {Object} tldjs
+ * @property {(url: string) => string} extractHostname
+ * @property {(url: string) => boolean} isValidHostname
+ * @property {(url: string) => boolean} isValid
+ * @property {(url: string) => ParseResult} parse
+ * @property {(url: string) => boolean} tldExists
+ * @property {(url: string) => string} getPublicSuffix
+ * @property {(url: string) => string|null} getDomain
+ * @property {(url: string) => string} getSubdomain
+ * @property {(FactoryOptions) => tldjs} fromUserSettings
+ */
+
+/**
+ * @typedef {object} ParseResult
+ * @property {string|null} hostname
+ * @property {boolean} isValid
+ * @property {boolean} isIp
+ * @property {boolean} tldExists
+ * @property {string|null} publicSuffix
+ * @property {string|null} domain
+ * @property {string|null} subdomain
+ */
 
 /**
  * Creates a new instance of tldjs
- * @param  {Object.<rules,validHosts>} options [description]
- * @return {tldjs|Object}                      [description]
+ * @param  {FactoryOptions} options [description]
+ * @return {tldjs}                      [description]
  */
 function factory(options) {
   var rules = options.rules || allRules || {};
@@ -45,11 +75,14 @@ function factory(options) {
    * simulates laziness at a lower cost).
    *
    * @param {string} url
-   * @param {number|undefined} _step - where should we stop processing
-   * @return {object}
+   * @param {number} [_step] - where should we stop processing
+   * @return {ParseResult}
    */
   function parse(url, _step) {
     var step = _step || ALL;
+    /**
+     * @type {ParseResult}
+     */
     var result = {
       hostname: _extractHostname(url),
       isValid: null,

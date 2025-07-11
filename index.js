@@ -1,5 +1,7 @@
 'use strict';
 
+var deprecate = require('util').deprecate;
+
 // Load rules
 var Trie = require('./lib/suffix-trie.js');
 var allRules = Trie.fromJson(require('./rules.json'));
@@ -99,11 +101,9 @@ function factory(options) {
   return {
     extractHostname: _extractHostname,
     isValidHostname: isValidHostname,
-    isValid: function (hostname) {
-      // eslint-disable-next-line
-      console.error('DeprecationWarning: "isValid" is deprecated, please use "isValidHostname" instead.');
+    isValid: deprecate(function isValid (hostname) {
       return isValidHostname(hostname);
-    },
+    }, '"isValid" is deprecated, please use "isValidHostname" instead.'),
     parse: parse,
     tldExists: function (url) {
       return parse(url, TLD_EXISTS).tldExists;

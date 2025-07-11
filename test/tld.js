@@ -70,7 +70,7 @@ describe('tld.js', function () {
       expect(tld.isValid('example.' + repeat('a', 63) + '.')).to.be(true);
       expect(tld.isValid('example.' + repeat('a', 63))).to.be(true);
 
-      //@see https://github.com/oncletom/tld.js/issues/95
+      //@see https://github.com/thom4parisot/tld.js/issues/95
       expect(tld.isValid('miam.miam.google.com.')).to.be(true);
 
       // Length of 255 (maximum allowed)
@@ -139,20 +139,20 @@ describe('tld.js', function () {
 
     it('should not break on specific RegExp characters', function (){
       expect(function (){
-        //@see https://github.com/oncletom/tld.js/issues/33
+        //@see https://github.com/thom4parisot/tld.js/issues/33
         tld.getDomain('www.weir)domain.com');
       }).not.to.throwError();
       expect(function (){
-        //@see https://github.com/oncletom/tld.js/issues/53
+        //@see https://github.com/thom4parisot/tld.js/issues/53
         tld.getDomain("http://('4drsteve.com', [], ['54.213.246.177'])/xmlrpc.php");
       }).not.to.throwError();
       expect(function (){
-        //@see https://github.com/oncletom/tld.js/issues/53
+        //@see https://github.com/thom4parisot/tld.js/issues/53
         tld.getDomain("('4drsteve.com', [], ['54.213.246.177'])");
       }).not.to.throwError();
     });
 
-    //@see https://github.com/oncletom/tld.js/issues/53
+    //@see https://github.com/thom4parisot/tld.js/issues/53
     it('should correctly extract domain from paths including "@" in the path', function (){
       var domain = tld.getDomain('http://cdn.jsdelivr.net/g/jquery@1.8.2,jquery.waypoints@2.0.2,qtip2@2.2.1,typeahead.js@0.9.3,sisyphus@0.1,jquery.slick@1.3.15,fastclick@1.0.3');
       expect(domain).to.equal('jsdelivr.net');
@@ -163,18 +163,19 @@ describe('tld.js', function () {
       expect(tld.getDomain('www.majestic12.co.uk')).to.equal('majestic12.co.uk');
     });
 
-    //@see https://github.com/oncletom/tld.js/issues/25
-    //@see https://github.com/oncletom/tld.js/issues/30
+    //@see https://github.com/thom4parisot/tld.js/issues/25
+    //@see https://github.com/thom4parisot/tld.js/issues/30
+    // tests could fail in time as reserved domains are removed, like blogspot.co.uk
     it('existing rule constraint', function () {
       expect(tld.getDomain('s3.amazonaws.com')).to.be(null);
-      expect(tld.getDomain('blogspot.co.uk')).to.be(null);
+      expect(tld.getDomain('blogspot.com')).to.be(null);
     });
 
     it('should return nytimes.com even in a whole valid', function(){
       expect(tld.getDomain('http://www.nytimes.com/')).to.be('nytimes.com');
     });
 
-    //@see https://github.com/oncletom/tld.js/issues/95
+    //@see https://github.com/thom4parisot/tld.js/issues/95
     it('should ignore the trailing dot in a domain', function () {
       expect(tld.getDomain('https://www.google.co.uk./maps')).to.equal('google.co.uk');
     });
@@ -201,7 +202,7 @@ describe('tld.js', function () {
       expect(tld.tldExists('uk.com')).to.be(true);
     });
 
-    //@see https://github.com/oncletom/tld.js/issues/95
+    //@see https://github.com/thom4parisot/tld.js/issues/95
     it('should ignore the trailing dot in a domain', function () {
       expect(tld.tldExists('https://www.google.co.uk./maps')).to.be(true);
     });
@@ -212,12 +213,12 @@ describe('tld.js', function () {
       expect(tld.getPublicSuffix('google.co.uk')).to.be('co.uk');
     });
 
-    // @see https://github.com/oncletom/tld.js/pull/97
+    // @see https://github.com/thom4parisot/tld.js/pull/97
     it('should return www.ck if www.www.ck', function () {
       expect(tld.getPublicSuffix('www.www.ck')).to.be('ck');
     });
 
-    //@see https://github.com/oncletom/tld.js/issues/30
+    //@see https://github.com/thom4parisot/tld.js/issues/30
     it('should return s3.amazonaws.com if s3.amazonaws.com', function () {
       expect(tld.getPublicSuffix('s3.amazonaws.com')).to.be('s3.amazonaws.com');
     });
@@ -234,12 +235,12 @@ describe('tld.js', function () {
       expect(tld.getPublicSuffix('microsoft.eu')).to.be('eu');
     });
 
-    // @see https://github.com/oncletom/tld.js/pull/97
+    // @see https://github.com/thom4parisot/tld.js/pull/97
     it('should return the string TLD if the publicsuffix does not exist', function(){
       expect(tld.getPublicSuffix('www.freedom.nsa')).to.be('nsa');
     });
 
-    // @see https://github.com/oncletom/tld.js/issues/95
+    // @see https://github.com/thom4parisot/tld.js/issues/95
     it('should ignore the trailing dot in a domain', function () {
       expect(tld.getPublicSuffix('https://www.google.co.uk./maps')).to.equal('co.uk');
     });
@@ -302,7 +303,7 @@ describe('tld.js', function () {
       expect(tld.extractHostname('台灣')).to.equal('xn--kpry57d');
     });
 
-    //@see https://github.com/oncletom/tld.js/issues/95
+    //@see https://github.com/thom4parisot/tld.js/issues/95
     it('should ignore the trailing dot in a domain', function () {
       expect(tld.extractHostname('http://example.co.uk./some/path?and&query#hash')).to.equal('example.co.uk');
     });
@@ -339,7 +340,7 @@ describe('tld.js', function () {
       expect(tld.getSubdomain('random.fr.google.co.uk')).to.equal('random.fr');
     });
 
-    //@see https://github.com/oncletom/tld.js/issues/25
+    //@see https://github.com/thom4parisot/tld.js/issues/25
     it.skip('should return the subdomain of reserved subdomains', function(){
       expect(tld.getSubdomain('blogspot.co.uk')).to.equal('');
       expect(tld.getSubdomain('emergency.blogspot.co.uk')).to.equal('emergency');
@@ -347,32 +348,32 @@ describe('tld.js', function () {
 
     it('should not break on specific RegExp characters', function (){
       expect(function (){
-        //@see https://github.com/oncletom/tld.js/issues/33
+        //@see https://github.com/thom4parisot/tld.js/issues/33
         tld.getSubdomain('www.weir)domain.com');
       }).not.to.throwError();
       expect(function (){
-        //@see https://github.com/oncletom/tld.js/issues/53
+        //@see https://github.com/thom4parisot/tld.js/issues/53
         tld.getSubdomain("http://('4drsteve.com', [], ['54.213.246.177'])/xmlrpc.php");
       }).not.to.throwError();
       expect(function (){
-        //@see https://github.com/oncletom/tld.js/issues/53
+        //@see https://github.com/thom4parisot/tld.js/issues/53
         tld.getSubdomain("('4drsteve.com', [], ['54.213.246.177'])");
       }).not.to.throwError();
     });
 
-    //@see https://github.com/oncletom/tld.js/issues/53
+    //@see https://github.com/thom4parisot/tld.js/issues/53
     it('should correctly extract domain from paths including "@" in the path', function (){
       var domain = tld.getSubdomain('http://cdn.jsdelivr.net/g/jquery@1.8.2,jquery.waypoints@2.0.2,qtip2@2.2.1,typeahead.js@0.9.3,sisyphus@0.1,jquery.slick@1.3.15,fastclick@1.0.3');
       expect(domain).to.equal('cdn');
     });
 
-    //@see https://github.com/oncletom/tld.js/issues/35
+    //@see https://github.com/thom4parisot/tld.js/issues/35
     it('should provide consistent results', function(){
       expect(tld.getSubdomain('www.bl.uk')).to.equal('www');
       expect(tld.getSubdomain('www.majestic12.co.uk')).to.equal('www');
     });
 
-    //@see https://github.com/oncletom/tld.js/issues/95
+    //@see https://github.com/thom4parisot/tld.js/issues/95
     it('should ignore the trailing dot in a domain', function () {
       expect(tld.getSubdomain('random.fr.google.co.uk.')).to.equal('random.fr');
     });
@@ -464,7 +465,7 @@ describe('tld.js', function () {
         expect(customTld.getDomain('subdomain.not-localhost')).to.equal('subdomain.not-localhost');
       });
 
-      //@see https://github.com/oncletom/tld.js/issues/66
+      //@see https://github.com/thom4parisot/tld.js/issues/66
       it('should return the subdomain of a validHost', function(){
         expect(customTld.getSubdomain('vhost.localhost')).to.equal('vhost');
       });

@@ -1,4 +1,4 @@
-# tld.js [![Backers on Open Collective](https://opencollective.com/tldjs/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/tldjs/sponsors/badge.svg)](#sponsors) [![Coverage Status](https://coveralls.io/repos/github/thom4parisot/tld.js/badge.svg?branch=master)](https://coveralls.io/github/thom4parisot/tld.js?branch=master) [![tests](https://github.com/thom4parisot/tld.js/actions/workflows/main.yml/badge.svg)](https://github.com/thom4parisot/tld.js/actions/workflows/main.yml) ![][badge-downloads]
+# tld.js [![Coverage Status](https://coveralls.io/repos/github/thom4parisot/tld.js/badge.svg?branch=master)](https://coveralls.io/github/thom4parisot/tld.js?branch=master) [![tests](https://github.com/thom4parisot/tld.js/actions/workflows/main.yml/badge.svg)](https://github.com/thom4parisot/tld.js/actions/workflows/main.yml) ![][badge-downloads]
 
 > `tld.js` is a Node.js module written in JavaScript to work against complex domain names, subdomains and well-known TLDs.
 
@@ -303,7 +303,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 [changes Atom Feed]: https://github.com/publicsuffix/list/commits/master.atom
 [browserify CDN]: https://wzrd.in/
 [browserify]: http://browserify.org/
-[interactive-example]: https://runkit.com/oncletom/tld.js-runkit-example
+[interactive-example]: https://runkit.com/thom4parisot/tld.js-runkit-example
 
 [`require('url').parse`]: https://nodejs.org/api/url.html#url_url_parse_urlstring_parsequerystring_slashesdenotehost
 [public suffix]: https://publicsuffix.org/learn/

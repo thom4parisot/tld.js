@@ -47,9 +47,7 @@
     ]
   },
   "dependencies": {
-    "punycode": "^2.0.0"
-  },
-  "devDependencies": {
+    "punycode": "^2.0.0",
     "benchmark": "^2.1.4",
     "browserify": "^17.0.1",
     "env-test": "^1.0.0",

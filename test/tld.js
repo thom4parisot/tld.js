@@ -1,6 +1,6 @@
 "use strict";
 
-/* global suite, test */
+const { before, describe, it } = require('mocha');
 
 var tld = require('../index.js');
 // `isIp` is not exposed as part of the public API because it only works on
@@ -447,7 +447,7 @@ describe('tld.js', function () {
   describe('validHosts', function(){
     var customTld;
 
-    context('non-empty array', function () {
+    describe('non-empty array', function () {
       before(function(){
         customTld = tld.fromUserSettings({
           validHosts: ['localhost']
@@ -475,7 +475,7 @@ describe('tld.js', function () {
       });
     });
 
-    context('empty value', function () {
+    describe('empty value', function () {
       it('falls-back to empty array', function () {
         expect(function () {
           customTld = tld.fromUserSettings({ validHosts: null });

@@ -1,6 +1,6 @@
 "use strict";
 
-/* global suite, test, setup */
+const { beforeEach, describe, it } = require('mocha');
 
 var tld = require('../index.js');
 var expect = require('expect.js');

@@ -15,6 +15,10 @@
     "node": ">= 20"
   },
   "main": "index.js",
+  "exports": {
+    "import": "./tld.js",
+    "require": "./index.js"
+  },
   "license": "MIT",
   "scripts": {
     "benchmark": "node ./bin/benchmark.js",

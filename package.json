@@ -51,7 +51,7 @@
     ]
   },
   "dependencies": {
-    "punycode": "^2.0.0"
+    "punycode": "^2.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

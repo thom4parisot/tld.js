@@ -49,6 +49,7 @@ tldjs.parse('https://spark-public.s3.amazonaws.com/dataanalysis/loansData.csv');
 //   tldExists: true,
 //   publicSuffix: 's3.amazonaws.com',
 //   domain: 'spark-public.s3.amazonaws.com',
+//   sld: 'spark-public',
 //   subdomain: ''
 // }
 
@@ -59,6 +60,7 @@ tldjs.parse('gopher://domain.unknown/');
 //   tldExists: false,
 //   publicSuffix: 'unknown',
 //   domain: 'domain.unknown',
+//   sld: 'domain',
 //   subdomain: ''
 // }
 
@@ -69,6 +71,7 @@ tldjs.parse('https://192.168.0.0')
 //   tldExists: false,
 //   publicSuffix: null,
 //   domain: null,
+//   sld: null,
 //   subdomain: null
 // }
 ```
@@ -80,6 +83,7 @@ tldjs.parse('https://192.168.0.0')
 | `tldExists`   | `Boolean` | Is the TLD well-known or not?  |
 | `publicSuffix`| `String`  |   |
 | `domain`      | `String`  |   |
+| `sld`         | `String`  |   |
 | `subdomain`   | `String`  |   |
 
 
@@ -149,6 +153,23 @@ getPublicSuffix('fr.google.com');    // returns `com`
 getPublicSuffix('google.co.uk');     // returns `co.uk`
 getPublicSuffix('s3.amazonaws.com'); // returns `s3.amazonaws.com`
 getPublicSuffix('tld.is.unknown');   // returns `unknown`
+```
+
+### getSLD()
+
+Returns the Second Level Domain (SLD) for a given string — parseable with [`require('url').parse`][].
+
+```javascript
+const { getSLD } = tldjs;
+
+getSLD('google.com');        // returns `google`
+getSLD('fr.google.com');     // returns `google`
+getSLD('google.co.uk');      // returns `google`
+getSLD('www.google.com');    // returns `google`
+getSLD('mail.google.co.uk'); // returns `google`
+getSLD('localhost');         // returns `null`
+getSLD('com');               // returns `null`
+getSLD('https://user:password@example.co.uk:8080/some/path?and&query#hash'); // returns `example`
 ```
 
 ### isValidHostname()

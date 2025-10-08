@@ -10,6 +10,7 @@ var allRules = Trie.fromJson(require('./rules.json'));
 var extractHostname = require('./lib/clean-host.js');
 var getDomain = require('./lib/domain.js');
 var getPublicSuffix = require('./lib/public-suffix.js');
+var getSLD = require('./lib/sld.js');
 var getSubdomain = require('./lib/subdomain.js');
 var isValidHostname = require('./lib/is-valid.js');
 var isIp = require('./lib/is-ip.js');
@@ -23,8 +24,9 @@ var tldExists = require('./lib/tld-exists.js');
 var TLD_EXISTS = 1;
 var PUBLIC_SUFFIX = 2;
 var DOMAIN = 3;
-var SUB_DOMAIN = 4;
-var ALL = 5;
+var SLD = 4;
+var SUB_DOMAIN = 5;
+var ALL = 6;
 
 /**
  * @typedef {object} FactoryOptions
@@ -42,6 +44,7 @@ var ALL = 5;
  * @property {(url: string) => boolean} tldExists
  * @property {(url: string) => string} getPublicSuffix
  * @property {(url: string) => string|null} getDomain
+ * @property {(url: string) => string|null} getSLD
  * @property {(url: string) => string} getSubdomain
  * @property {(FactoryOptions) => tldjs} fromUserSettings
  */
@@ -54,6 +57,7 @@ var ALL = 5;
  * @property {boolean} tldExists
  * @property {string|null} publicSuffix
  * @property {string|null} domain
+ * @property {string|null} sld
  * @property {string|null} subdomain
  */
 
@@ -90,6 +94,7 @@ function factory(options) {
       tldExists: false,
       publicSuffix: null,
       domain: null,
+      sld: null,
       subdomain: null,
     };
 
@@ -124,6 +129,12 @@ function factory(options) {
     result.domain = getDomain(validHosts, result.publicSuffix, result.hostname);
     if (step === DOMAIN) { return result; }
 
+    // Extract SLD
+    if (step === ALL || step === SLD) {
+      result.sld = getSLD(result.hostname, result.publicSuffix);
+    }
+    if (step === SLD) { return result; }
+
     // Extract subdomain
     result.subdomain = getSubdomain(result.hostname, result.domain);
 
@@ -147,7 +158,10 @@ function factory(options) {
     getDomain: function (url) {
       return parse(url, DOMAIN).domain;
     },
-    getSubdomain: function (url) {
+    getSLD: function(url) {
+      return parse(url, SLD).sld;
+    },
+    getSubdomain: function(url) {
       return parse(url, SUB_DOMAIN).subdomain;
     },
     fromUserSettings: factory

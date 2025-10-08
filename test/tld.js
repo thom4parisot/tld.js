@@ -7,6 +7,7 @@ var tld = require('../index.js');
 // valid hostname. Hence, we only use it internally.
 
 var isIp = require('../lib/is-ip.js');
+var getSLD = require('../lib/sld.js');
 var parser = require('../lib/parsers/publicsuffix-org.js');
 var expect = require('expect.js');
 
@@ -379,6 +380,34 @@ describe('tld.js', function () {
     });
   });
 
+  describe('getSLD method', function () {
+    it('should return null for invalid cases', function () {
+      expect(tld.getSLD('')).to.be(null);
+      expect(tld.getSLD('192.168.0.1')).to.be(null);
+      expect(tld.getSLD('localhost')).to.be(null);
+      expect(tld.getSLD('com')).to.be(null);
+      expect(tld.getSLD('single')).to.be(null);
+    });
+
+    it('should extract SLD from domains', function () {
+      expect(tld.getSLD('google.com')).to.equal('google');
+      expect(tld.getSLD('google.co.uk')).to.equal('google');
+      expect(tld.getSLD('www.google.com')).to.equal('google');
+      expect(tld.getSLD('mail.google.co.uk')).to.equal('google');
+    });
+
+    it('should handle URLs', function () {
+      expect(tld.getSLD('http://www.google.com/')).to.equal('google');
+      expect(tld.getSLD('  GOOGLE.COM  ')).to.equal('google');
+      expect(tld.getSLD('google.com.')).to.equal('google');
+    });
+
+    it('should handle edge cases', function () {
+      expect(getSLD('', 'com')).to.be(null);
+      expect(getSLD('test.notcom', 'com')).to.be(null);
+    });
+  });
+
   describe('#parse', function () {
     it('should handle ipv6 addresses properly', function () {
       expect(tld.parse('http://[2001:0db8:85a3:0000:0000:8a2e:0370:7334]')).to.eql({
@@ -388,6 +417,7 @@ describe('tld.js', function () {
         tldExists: false,
         publicSuffix: null,
         domain: null,
+        sld: null,
         subdomain: null
       });
       expect(tld.parse('http://user:pass@[::1]/segment/index.html?query#frag')).to.eql({
@@ -397,6 +427,7 @@ describe('tld.js', function () {
         tldExists: false,
         publicSuffix: null,
         domain: null,
+        sld: null,
         subdomain: null
       });
       expect(tld.parse('https://[::1]')).to.eql({
@@ -406,6 +437,7 @@ describe('tld.js', function () {
         tldExists: false,
         publicSuffix: null,
         domain: null,
+        sld: null,
         subdomain: null
       });
       expect(tld.parse('http://[1080::8:800:200C:417A]/foo')).to.eql({
@@ -415,6 +447,7 @@ describe('tld.js', function () {
         tldExists: false,
         publicSuffix: null,
         domain: null,
+        sld: null,
         subdomain: null
       });
     });
@@ -428,6 +461,7 @@ describe('tld.js', function () {
         tldExists: false,
         publicSuffix: null,
         domain: null,
+        sld: null,
         subdomain: null,
       });
 
@@ -439,8 +473,33 @@ describe('tld.js', function () {
       //   tldExists: false,
       //   publicSuffix: null,
       //   domain: null,
+      //   sld: null,
       //   subdomain: null,
       // });
+    });
+
+    it('should include SLD in parse results for valid domains', function () {
+      expect(tld.parse('www.google.com')).to.eql({
+        hostname: 'www.google.com',
+        isValid: true,
+        isIp: false,
+        tldExists: true,
+        publicSuffix: 'com',
+        domain: 'google.com',
+        sld: 'google',
+        subdomain: 'www'
+      });
+
+      expect(tld.parse('example.co.uk')).to.eql({
+        hostname: 'example.co.uk',
+        isValid: true,
+        isIp: false,
+        tldExists: true,
+        publicSuffix: 'co.uk',
+        domain: 'example.co.uk',
+        sld: 'example',
+        subdomain: ''
+      });
     });
   });
 

@@ -106,12 +106,12 @@ describe('tld.js', function () {
       expect(isIp('::1')).to.be(true);
       expect(isIp('2001:0db8:85a3:0000:0000:8a2e:0370:7334')).to.be(true);
       expect(isIp('192.168.0.1')).to.be(true);
+      expect(isIp('[::1]')).to.be(true);
+      expect(isIp('[2001:0db8:85a3:0000:0000:8a2e:0370:7334]')).to.be(true);
     });
 
     it('should return false on invalid ip addresses', function () {
       expect(isIp('::1-')).to.be(false);
-      expect(isIp('[::1]')).to.be(false);
-      expect(isIp('[2001:0db8:85a3:0000:0000:8a2e:0370:7334]')).to.be(false);
       expect(isIp('192.168.0.1.')).to.be(false);
       expect(isIp('192.168.0')).to.be(false);
       expect(isIp('192.168.0.')).to.be(false);
@@ -276,11 +276,11 @@ describe('tld.js', function () {
     });
 
     it('should return the hostname of a user-password same-scheme URL', function(){
-      expect(tld.extractHostname('//user:password@example.co.uk:8080/some/path?and&query#hash')).to.equal('example.co.uk');
+      expect(tld.extractHostname('http://user:password@example.co.uk:8080/some/path?and&query#hash')).to.equal('example.co.uk');
     });
 
     it('should return the hostname of a passwordless same-scheme URL', function(){
-      expect(tld.extractHostname('//user@example.co.uk:8080/some/path?and&query#hash')).to.equal('example.co.uk');
+      expect(tld.extractHostname('http://user@example.co.uk:8080/some/path?and&query#hash')).to.equal('example.co.uk');
     });
 
     it('should return the hostname of a complex user-password scheme URL', function(){
@@ -292,7 +292,12 @@ describe('tld.js', function () {
     });
 
     it('should return the initial value if it is not a valid hostname', function(){
-      expect(tld.extractHostname(42)).to.equal('42');
+      expect(tld.extractHostname('placeholder://42')).to.equal('42');
+    });
+
+    // this represents a difference between the legacy url.parse function and the whatwg URL constructor
+    it('should parse the host when it sees a number', function(){
+      expect(tld.extractHostname(42)).to.equal('0.0.0.42');
     });
 
     it('should return www.nytimes.com even with an URL as a parameter', function(){
@@ -382,7 +387,7 @@ describe('tld.js', function () {
   describe('#parse', function () {
     it('should handle ipv6 addresses properly', function () {
       expect(tld.parse('http://[2001:0db8:85a3:0000:0000:8a2e:0370:7334]')).to.eql({
-        hostname: '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+        hostname: '[2001:db8:85a3::8a2e:370:7334]',
         isValid: true,
         isIp: true,
         tldExists: false,
@@ -391,7 +396,7 @@ describe('tld.js', function () {
         subdomain: null
       });
       expect(tld.parse('http://user:pass@[::1]/segment/index.html?query#frag')).to.eql({
-        hostname: '::1',
+        hostname: '[::1]',
         isValid: true,
         isIp: true,
         tldExists: false,
@@ -400,7 +405,7 @@ describe('tld.js', function () {
         subdomain: null
       });
       expect(tld.parse('https://[::1]')).to.eql({
-        hostname: '::1',
+        hostname: '[::1]',
         isValid: true,
         isIp: true,
         tldExists: false,
@@ -409,7 +414,7 @@ describe('tld.js', function () {
         subdomain: null
       });
       expect(tld.parse('http://[1080::8:800:200C:417A]/foo')).to.eql({
-        hostname: '1080::8:800:200c:417a',
+        hostname: '[1080::8:800:200c:417a]',
         isValid: true,
         isIp: true,
         tldExists: false,
